@@ -1,16 +1,20 @@
 import React from "react";
 import axios from "axios";
-import { Peep } from "./components/Peep/Peep";
+
 import "./App.css";
 import { PeepsContainer } from "./components/PeepsContainer/PeepsContainer";
+
 class App extends React.Component {
-  state = { peeps: [] };
+  state = { peeps: [], authenticated: false };
+
   componentDidMount() {
+    //todo replace with get all peeps
     axios.get(`https://chitter-backend-api.herokuapp.com/peeps`).then(res => {
       const peeps = res.data;
       this.setState({ peeps });
     });
   }
+
   render() {
     const { peeps } = this.state;
     return (
@@ -21,4 +25,5 @@ class App extends React.Component {
     );
   }
 }
+
 export default App;
