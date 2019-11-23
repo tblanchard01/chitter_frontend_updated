@@ -3,10 +3,16 @@ import axios from "axios";
 
 import "./App.css";
 import { PeepsContainer } from "./components/PeepsContainer/PeepsContainer";
+import { AuthBox } from "./AuthBox/AuthBox";
 
 class App extends React.Component {
-  state = { peeps: [], authenticated: false };
+constructor(props){
+  super(props)
+  this.state = { peeps: [], authenticated: false };
+  this.handleAuth = this.handleAuth.bind(this);
 
+
+}
   componentDidMount() {
     //todo replace with get all peeps
     axios.get(`https://chitter-backend-api.herokuapp.com/peeps`).then(res => {
@@ -15,10 +21,25 @@ class App extends React.Component {
     });
   }
 
+  handleAuth(message) {
+    // axios
+    //   .post(`https://chitter-backend-api.herokuapp.com/users`, {
+    //     handle,
+    //     password
+    //   })
+    //   .then(res => console.log(res));
+  
+  alert(message);
+  }
+
+
+  
+
   render() {
-    const { peeps } = this.state;
+    const { peeps, authenticated } = this.state;
     return (
       <div>
+        {!authenticated && <AuthBox handleAuth={this.handleAuth} />}
         <h1>hello</h1>
         <PeepsContainer peeps={peeps} />
       </div>
