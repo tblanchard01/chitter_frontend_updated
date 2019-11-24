@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 export function AuthBox({ handleAuth }) {
+  const [handle, setHandle] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <div>
       <span>
-        <form>
-          {" "}
-          Username: <input /> Password: <input />
+          Username: <input onChange={e => setHandle(e.target.value)} />
+          Password: <input onChange={e => setPassword(e.target.value)} />
           <input
-            type="submit" value
+            type="submit"
             onClick={e => {
               e.preventDefault();
-              console.log(e.target);
+              console.log({handle, password});
+              handleAuth(handle, password)
             }}
           />
-        </form>
       </span>
     </div>
   );
