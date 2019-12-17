@@ -8,7 +8,7 @@ import { AuthBox } from "./AuthBox/AuthBox";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { peeps: [], authenticated: false };
+    this.state = { peeps: [], authenticated: false, sessionKey: null };
     this.handleAuth = this.handleAuth.bind(this);
   }
   componentDidMount() {
@@ -19,6 +19,17 @@ class App extends React.Component {
     });
   }
 
+  getSessionKey(handle, password) {
+    axios
+      .post(`https://chitter-backend-api.herokuapp.com/sessions`, {
+        session: {
+          handle,
+          password
+        }
+      })
+      .then(res => console.log("response from getting a session token", res));
+  }
+
   handleAuth(handle, password) {
     axios
       .post(`https://chitter-backend-api.herokuapp.com/users`, {
@@ -27,7 +38,14 @@ class App extends React.Component {
           password
         }
       })
-      .then(res => console.log(res));
+      .then(res => {
+        console.log("this is the res", res);
+        if (res.status < 300) {
+          this.getSessionKey(handle, password);
+        } else {
+          console.log("authentication error");
+        }
+      });
   }
 
   render() {
