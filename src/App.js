@@ -5,14 +5,14 @@ import "./App.css";
 import { PeepsContainer } from "./components/PeepsContainer/PeepsContainer";
 import { AuthBox } from "./AuthBox/AuthBox";
 
+console.log("hot refresh");
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { peeps: [], authenticated: false, sessionKey: null };
+    this.state = { peeps: [], sessionKey: null };
     this.handleAuth = this.handleAuth.bind(this);
   }
   componentDidMount() {
-    //todo replace with get all peeps
     axios.get(`https://chitter-backend-api.herokuapp.com/peeps`).then(res => {
       const peeps = res.data;
       this.setState({ peeps });
@@ -27,7 +27,15 @@ class App extends React.Component {
           password
         }
       })
-      .then(res => console.log("response from getting a session token", res));
+      .then(res => {
+        if (res.status < 300) {
+          const sessionKey = res.data.session_key;
+          console.log('session key res >>>',res);
+          this.setState({ sessionKey });
+        } else {
+          console.log("session Error");
+        }
+      });
   }
 
   handleAuth(handle, password) {
@@ -39,7 +47,6 @@ class App extends React.Component {
         }
       })
       .then(res => {
-        console.log("this is the res", res);
         if (res.status < 300) {
           this.getSessionKey(handle, password);
         } else {
@@ -49,10 +56,10 @@ class App extends React.Component {
   }
 
   render() {
-    const { peeps, authenticated } = this.state;
+    const { peeps, sessionKey } = this.state;
     return (
       <div>
-        {!authenticated && <AuthBox handleAuth={this.handleAuth} />}
+        {!sessionKey && <AuthBox handleAuth={this.handleAuth} />}
         <h1>hello</h1>
         <PeepsContainer peeps={peeps} />
       </div>

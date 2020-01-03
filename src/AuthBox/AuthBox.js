@@ -12,7 +12,6 @@ export function AuthBox({ handleAuth }) {
             type="submit"
             onClick={e => {
               e.preventDefault();
-              console.log({handle, password});
               handleAuth(handle, password)
             }}
           />
