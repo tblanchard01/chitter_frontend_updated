@@ -19,15 +19,15 @@ class App extends React.Component {
     this.fetchPeeps = this.fetchPeeps.bind(this);
   }
   componentDidMount() {
-    this.fetchPeeps()
+    this.fetchPeeps();
   }
 
   async fetchPeeps() {
-   await axios.get(
+    const res = await axios.get(
       `https://chitter-backend-api.herokuapp.com/peeps`
-    ).then(res => {
-      const peeps = res.data
-      this.setState({peeps})})
+    );
+    const peeps = res.data;
+    this.setState({ peeps });
   }
 
   getSessionKey(handle, password) {
@@ -65,6 +65,7 @@ class App extends React.Component {
       });
   }
   handlePostPeep(userID, sessionKey) {
+    this.fetchPeeps = this.fetchPeeps.bind(this);
     return function(peep) {
       axios
         .post(
@@ -79,7 +80,7 @@ class App extends React.Component {
         )
         .then(res => {
           if (res.status < 300) {
-            console.log("response from posting a peep", res);
+            this.fetchPeeps();
           } else {
             console.log("authentication error");
           }
