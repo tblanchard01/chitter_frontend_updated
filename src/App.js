@@ -12,7 +12,6 @@ class App extends React.Component {
       peeps: [],
       sessionKey: null,
       userID: null,
-      currentPeep: null
     };
     this.handleAuth = this.handleAuth.bind(this);
     this.handlePostPeep = this.handlePostPeep.bind(this);
@@ -21,7 +20,6 @@ class App extends React.Component {
   componentDidMount() {
     this.fetchPeeps();
   }
-
   async fetchPeeps() {
     const res = await axios.get(
       `https://chitter-backend-api.herokuapp.com/peeps`
@@ -29,62 +27,57 @@ class App extends React.Component {
     const peeps = res.data;
     this.setState({ peeps });
   }
-
-  getSessionKey(handle, password) {
-    axios
-      .post(`https://chitter-backend-api.herokuapp.com/sessions`, {
+  async getSessionKey(handle, password) {
+    const res = await axios.post(
+      `https://chitter-backend-api.herokuapp.com/sessions`,
+      {
         session: {
           handle,
           password
         }
-      })
-      .then(res => {
-        if (res.status < 300) {
-          const [sessionKey, userID] = [res.data.session_key, res.data.user_id];
-          console.log("session key res >>>", res);
-          this.setState({ sessionKey, userID });
-        } else {
-          console.log("session Error");
-        }
-      });
+      }
+    );
+    if (res.status < 300) {
+      const [sessionKey, userID] = [res.data.session_key, res.data.user_id];
+      console.log("session key res >>>", res);
+      this.setState({ sessionKey, userID });
+    } else {
+      console.log("session Error");
+    }
   }
-  handleAuth(handle, password) {
-    axios
-      .post(`https://chitter-backend-api.herokuapp.com/users`, {
+  async handleAuth(handle, password) {
+    const res = await axios.post(
+      `https://chitter-backend-api.herokuapp.com/users`,
+      {
         user: {
           handle,
           password
         }
-      })
-      .then(res => {
-        if (res.status < 300) {
-          this.getSessionKey(handle, password);
-        } else {
-          console.log("authentication error");
-        }
-      });
+      }
+    );
+    if (res.status < 300) {
+      this.getSessionKey(handle, password);
+    } else {
+      console.log("authentication error");
+    }
   }
-  handlePostPeep(userID, sessionKey) {
-    this.fetchPeeps = this.fetchPeeps.bind(this);
-    return function(peep) {
-      axios
-        .post(
-          `https://chitter-backend-api.herokuapp.com/peeps`,
-          {
-            peep: {
-              user_id: userID,
-              body: peep
-            }
-          },
-          { headers: { authorization: `Token token=${sessionKey}` } }
-        )
-        .then(res => {
-          if (res.status < 300) {
-            this.fetchPeeps();
-          } else {
-            console.log("authentication error");
+   handlePostPeep(userID, sessionKey, fetchPeeps) {
+    return async function(peep) {
+      const res = await axios.post(
+        `https://chitter-backend-api.herokuapp.com/peeps`,
+        {
+          peep: {
+            user_id: userID,
+            body: peep
           }
-        });
+        },
+        { headers: { authorization: `Token token=${sessionKey}` } }
+      );
+      if (res.status < 300) {
+        fetchPeeps()
+      } else {
+        
+      }
     };
   }
   render() {
@@ -93,7 +86,7 @@ class App extends React.Component {
       <div>
         {!sessionKey && <AuthBox handleAuth={this.handleAuth} />}
         {sessionKey && (
-          <PostPeep handlePostPeep={this.handlePostPeep(userID, sessionKey)} />
+          <PostPeep handlePostPeep={this.handlePostPeep(userID, sessionKey, this.fetchPeeps)} />
         )}
         <h1>hello</h1>
         <PeepsContainer peeps={peeps} />
