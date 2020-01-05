@@ -1,5 +1,5 @@
 import React from "react";
-import { Peep } from "../Peep/Peep";
+import { Peep } from "../index"
 export function PeepsContainer({ peeps }) {
   return (
     <div>
