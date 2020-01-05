@@ -3,11 +3,11 @@ import { Peep } from "../index"
 export function PeepsContainer({ peeps }) {
   return (
     <div>
-      {peeps.map((peep, index) => {
-        const { user, body, likes } = peep;
+      {peeps.map((peep) => {
+        const { user, body, likes,id } = peep;
         return (
           <Peep
-            key={index}
+            key={id}
             handle={user.handle}
             body={body}
             likes={likes.length}
