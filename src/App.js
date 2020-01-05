@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { AuthBox, PeepsContainer, PostPeep } from "./Components"
+import { AuthBox, PeepsContainer, PostPeep, ErrorBox } from "./Components"
 import {
   fetchPeeps,
   getSessionKey,
@@ -8,12 +8,14 @@ import {
   handleAuth
 } from "./Operations";
 console.log("hot refresh");
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       peeps: [],
       sessionKey: null,
+      handle: null, 
       userID: null,
       errors:[] 
     };
@@ -26,9 +28,10 @@ class App extends React.Component {
     this.fetchPeeps();
   }
   render() {
-    const { peeps, userID, sessionKey } = this.state;
+    const { peeps, userID, sessionKey, errors, handle } = this.state;
     return (
       <div>
+        {!!errors.length && <ErrorBox message={errors[0]}/>}
         {!sessionKey && <AuthBox handleAuth={this.handleAuth} />}
         {sessionKey && (
           <PostPeep
@@ -39,7 +42,7 @@ class App extends React.Component {
             )}
           />
         )}
-        <h1>hello</h1>
+  <h1>hello {handle||""}!</h1>
         <PeepsContainer peeps={peeps} />
       </div>
     );

@@ -16,6 +16,7 @@ export async function handleAuth(handle, password) {
   if (res.status === 201) {
     this.getSessionKey(handle, password);
     this.setState({ errors:this.state.errors.filter(error => error !== "authentication") })
+    this.setState({handle})
   }} catch(e){
     if(!this.state.errors.includes("authentication")){
      this.setState({ errors: [...this.state.errors, "authentication"]}) }
