@@ -1,3 +1,7 @@
+After a few months of working in a frontend role, I've decided to revist the infamous chitter challenge, just to see how I would approach it now I have been working with a proffesional codebase. Instructions below: 
+
+
+
 # Chitter API Frontend Challenge
 
 * Challenge time: rest of the day and weekend, until Monday 9am
