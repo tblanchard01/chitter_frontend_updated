@@ -14,7 +14,8 @@ class App extends React.Component {
     this.state = {
       peeps: [],
       sessionKey: null,
-      userID: null
+      userID: null,
+      errors:[] 
     };
     this.fetchPeeps = fetchPeeps.bind(this);
     this.getSessionKey = getSessionKey.bind(this);

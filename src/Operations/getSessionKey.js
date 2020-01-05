@@ -12,9 +12,11 @@ export async function getSessionKey(handle, password) {
   );
   if (res.status < 300) {
     const [sessionKey, userID] = [res.data.session_key, res.data.user_id];
-    console.log("session key res >>>", res);
-    this.setState({ sessionKey, userID });
+    this.setState({ sessionKey, userID, errors:this.state.errors.filter(error => error !== "session token") });
+    
+
   } else {
-    console.log("session Error");
+   this.setState({ errors: [...this.state.errors, "session token"] })
+  console.log('session error')
   }
 }
