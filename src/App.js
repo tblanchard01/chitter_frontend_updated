@@ -5,7 +5,8 @@ import {
   fetchPeeps,
   getSessionKey,
   handlePostPeep,
-  handleAuth
+  handleAuth, 
+  handleLike
 } from "./Operations";
 console.log("hot refresh");
 
@@ -23,6 +24,7 @@ class App extends React.Component {
     this.getSessionKey = getSessionKey.bind(this);
     this.handlePostPeep = handlePostPeep.bind(this);
     this.handleAuth = handleAuth.bind(this);
+    this.handleLike = handleLike.bind(this)
   }
   componentDidMount() {
     this.fetchPeeps();
@@ -42,8 +44,8 @@ class App extends React.Component {
             )}
           />
         )}
-  <h1>hello {handle||""}!</h1>
-        <PeepsContainer peeps={peeps} />
+  <h1>hello{handle||""}!</h1>
+        <PeepsContainer peeps={peeps} authenticated={!!sessionKey} handleLike = {this.handleLike(userID, sessionKey, this.fetchPeeps)}  />
       </div>
     );
   }

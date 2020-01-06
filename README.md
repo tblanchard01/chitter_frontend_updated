@@ -23,12 +23,12 @@ Your task is to build a front-end single-page-app to interface with this API. Yo
 
 Here are some interactions the API supports. Implement as many as you see fit.
 
-* Creating Users
-* Logging in
-* Posting Peeps
-* Viewing all Peeps *(I suggest you start here)*
-* Viewing individual Peeps
-* Deleting Peeps
+* Creating Users - done
+* Logging in - done
+* Posting Peeps - done
+* Viewing all Peeps *(I suggest you start here)* - done
+* Viewing individual Peeps - ?
+* Deleting Peeps 
 * Liking Peeps
 * Unliking Peeps
 
