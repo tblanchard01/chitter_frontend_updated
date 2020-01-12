@@ -8,8 +8,7 @@ export function handleLike(userID, sessionKey, fetchPeeps) {
     );
     if (res.status < 300) {
       fetchPeeps();
-    } else {
-    }
+    } 
   };
 }
 

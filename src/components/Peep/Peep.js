@@ -1,17 +1,27 @@
 import React from "react";
-import {LikePeep} from "../../Components"
+import { Heart } from "../../Components";
 
-export function Peep({ id, handle, body, likes, authenticated, handleLike }) {
+export function Peep({
+  id,
+  handle,
+  body,
+  likes,
+  authenticated,
+  handleLike,
+  handleUnlike
+}) {
   return (
     <div>
       <h2>{handle}</h2>
       <p>{body}</p>
       <p>{likes} likes</p>
       <p>Peep number: {id}</p>
-     <LikePeep id={id} authenticated={authenticated} handleLike={handleLike}/>
+      <Heart
+        id={id}
+        authenticated={authenticated}
+        handleLike={handleLike}
+        handleUnlike={handleUnlike}
+      />
     </div>
   );
 }
-// a usestate hook here would be good for . 
-
-// {authenticated && <button onClick={ () => handleLike(id)}>Like</button>}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Peep } from "../index"
-export function PeepsContainer({ peeps, authenticated, handleLike }) {
+export function PeepsContainer({ peeps, authenticated, handleLike, handleUnlike }) {
   return (
     <div>
       {peeps.map((peep) => {
@@ -14,6 +14,7 @@ export function PeepsContainer({ peeps, authenticated, handleLike }) {
             likes={likes.length}
             authenticated={authenticated}
             handleLike={handleLike}
+            handleUnlike={handleUnlike}
           />
         );
       })}

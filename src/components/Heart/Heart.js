@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import UnfilledHeart from "../../Images/Favourite/unfilled_heart.png";
 import FilledHeart from "../../Images/Favourite/filled_heart.png";
 
-export function LikePeep({ id, authenticated, handleLike }) {
+export function Heart({ id, authenticated, handleLike, handleUnlike }) {
   const [liked, updateLikeState] = useState(false);
 
-  function like(){
-    handleLike(id)
-    updateLikeState(true)
+  function like() {
+    handleLike(id);
+    updateLikeState(true);
+  }
+
+  function unlike() {
+    handleUnlike(id);
+    updateLikeState(false);
   }
 
   if (!liked && !authenticated) {
@@ -20,18 +25,20 @@ export function LikePeep({ id, authenticated, handleLike }) {
 
   if (!liked && authenticated) {
     return (
-      <div onClick = {like}> 
+      <div onClick={like}>
         <img src={UnfilledHeart} alt="Like" />{" "}
       </div>
     );
   }
 
-  if(liked){
-    return <div>'foo'</div>
+  if (liked) {
+    return (
+      <div onClick={unlike}>
+        <img src={FilledHeart} alt="Like" />{" "}
+      </div>
+    );
   }
 }
-
-
 
 // unliked && unathenticated => empty heart which does nothing (or displays login prompt)
 // unliked && athenticated => empty heart which calls like
