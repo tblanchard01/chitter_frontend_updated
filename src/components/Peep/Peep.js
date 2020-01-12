@@ -14,7 +14,7 @@ export function Peep({
     <div>
       <h2>{handle}</h2>
       <p>{body}</p>
-      <p>{likes} likes</p>
+      <p>{`${likes} ${likes === 1? 'like' : 'likes'}` } </p>
       <p>Peep number: {id}</p>
       <Heart
         id={id}
