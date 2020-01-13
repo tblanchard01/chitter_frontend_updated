@@ -9,7 +9,6 @@ import {
   handleLike,
   handleUnlike
 } from "./Operations";
-console.log("hot refresh");
 
 class App extends React.Component {
   constructor(props) {
